@@ -20,7 +20,6 @@ import Backdrop from "./components/Backdrop";
 export default function App() {
   const scrollX = useSharedValue(0);
   const [movies, setMovies] = useState<any[]>([]);
-  console.log(movies[0]);
 
   const scrollXHandler = useAnimatedScrollHandler((event) => {
     scrollX.value = event.contentOffset.x;
