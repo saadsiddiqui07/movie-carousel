@@ -1,78 +1,21 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import {
-  Dimensions,
   Platform,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
 } from "react-native";
 import { getMovies } from "./api";
-import Rating from "./components/Rating";
-import Genres from "./components/Genres";
+
 import Animated, {
-  SharedValue,
-  interpolate,
   useAnimatedScrollHandler,
-  useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
-
-const { width, height } = Dimensions.get("window");
-
-const SPACING = 10;
-// const ITEM_SIZE = Platform.OS === "ios" ? width * 0.72 : width * 0.74;
-const ITEM_SIZE = width;
-const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
-const BACKDROP_HEIGHT = height * 0.65;
-
-interface Props {
-  item: any;
-  scrollX: SharedValue<number>;
-  index: number;
-}
-
-const Item = ({ index, item, scrollX }: Props) => {
-  const inputRange = [
-    (index - 0.6) * width,
-    index * width,
-    (index + 0.6) * width,
-  ];
-  const animatedImageStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ scale: interpolate(scrollX.value, inputRange, [0, 1, 0]) }],
-    };
-  });
-
-  return (
-    <View key={item.key} style={{ width: ITEM_SIZE }}>
-      <View
-        style={{
-          marginHorizontal: SPACING,
-          padding: SPACING * 2,
-          alignItems: "center",
-          backgroundColor: "white",
-          borderRadius: 34,
-        }}
-      >
-        <Animated.Image
-          source={{ uri: item.poster }}
-          style={[styles.posterImage]}
-        />
-        <Text style={{ fontSize: 24 }} numberOfLines={1}>
-          {item.title}
-        </Text>
-        <Rating rating={item.rating} />
-        <Genres genres={item.genres} />
-        <Text style={{ fontSize: 12 }} numberOfLines={3}>
-          {item.description}
-        </Text>
-      </View>
-    </View>
-  );
-};
+import Item from "./components/Item";
+import { ITEM_SIZE, width } from "./constants";
+import Backdrop from "./components/Backdrop";
 
 export default function App() {
   const scrollX = useSharedValue(0);
@@ -93,10 +36,11 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
+      <Backdrop movies={movies} scrollX={scrollX} />
       <Animated.FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        snapToInterval={ITEM_SIZE}
+        snapToInterval={width}
         pagingEnabled
         bounces={false}
         decelerationRate={Platform.OS === "ios" ? 0 : 0.98}
@@ -136,7 +80,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   posterImage: {
-    width: ITEM_SIZE * 0.75,
+    width: "100%",
     height: ITEM_SIZE * 1.2,
     resizeMode: "cover",
     borderRadius: 24,
