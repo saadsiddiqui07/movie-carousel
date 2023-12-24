@@ -59,15 +59,22 @@ export default function App() {
         activeOpacity={0.7}
         style={{
           alignSelf: "center",
-          backgroundColor: "black",
+          backgroundColor: "#0f172a",
           paddingHorizontal: 20,
           paddingVertical: 10,
-          borderRadius: 10,
+          width: "80%",
           // marginBottom: 20,
         }}
       >
-        <Text style={{ color: "white", fontWeight: "900", fontSize: 15 }}>
-          Book Tickets
+        <Text
+          style={{
+            color: "white",
+            fontWeight: "800",
+            fontSize: 15,
+            textAlign: "center",
+          }}
+        >
+          Buy Ticket
         </Text>
       </TouchableOpacity>
     </SafeAreaView>

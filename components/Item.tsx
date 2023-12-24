@@ -5,7 +5,7 @@ import Animated, {
   useAnimatedStyle,
 } from "react-native-reanimated";
 import { ITEM_SIZE, SPACING, width } from "../constants";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import Rating from "./Rating";
 import Genres from "./Genres";
 
@@ -15,18 +15,23 @@ interface Props {
   index: number;
 }
 
+const AnimatedItemComponent = Animated.createAnimatedComponent(View);
+
 const Item = ({ index, item, scrollX }: Props) => {
   const inputRange = [(index - 1) * width, index * width, (index + 1) * width];
   const animatedImageStyle = useAnimatedStyle(() => {
     return {
       transform: [
-        { translateY: interpolate(scrollX.value, inputRange, [0, -40, 0]) },
+        { translateY: interpolate(scrollX.value, inputRange, [40, -30, 40]) },
       ],
     };
   });
 
   return (
-    <View key={item.key} style={{ width: width }}>
+    <Animated.View
+      key={item.key}
+      style={[{ width: width, marginTop: SPACING * 2 }, animatedImageStyle]}
+    >
       <View
         style={{
           marginHorizontal: SPACING * 5,
@@ -36,10 +41,7 @@ const Item = ({ index, item, scrollX }: Props) => {
           borderRadius: 34,
         }}
       >
-        <Animated.Image
-          source={{ uri: item.poster }}
-          style={[styles.posterImage]}
-        />
+        <Image source={{ uri: item.poster }} style={[styles.posterImage]} />
         <Text style={{ fontSize: 24 }} numberOfLines={1}>
           {item.title}
         </Text>
@@ -47,12 +49,17 @@ const Item = ({ index, item, scrollX }: Props) => {
         <Genres genres={item.genres} />
       </View>
       <Text
-        style={{ fontSize: 12, marginHorizontal: SPACING * 2 }}
+        style={{
+          fontSize: 12,
+          marginHorizontal: SPACING * 2,
+          textAlign: "center",
+          marginTop: SPACING * 2,
+        }}
         numberOfLines={3}
       >
         {item.description}
       </Text>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -62,8 +69,8 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   posterImage: {
-    width: ITEM_SIZE * 0.75,
-    height: ITEM_SIZE * 1.2,
+    width: ITEM_SIZE * 0.8,
+    height: ITEM_SIZE * 1.1,
     resizeMode: "cover",
     borderRadius: 24,
     margin: 0,

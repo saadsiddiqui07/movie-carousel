@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   genreText: {
-    fontSize: 9,
+    fontSize: 10,
     opacity: 0.4,
   },
 });
