@@ -20,6 +20,7 @@ import Backdrop from "./components/Backdrop";
 export default function App() {
   const scrollX = useSharedValue(0);
   const [movies, setMovies] = useState<any[]>([]);
+  console.log(movies[0]);
 
   const scrollXHandler = useAnimatedScrollHandler((event) => {
     scrollX.value = event.contentOffset.x;
@@ -41,7 +42,6 @@ export default function App() {
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToInterval={width}
-        pagingEnabled
         bounces={false}
         decelerationRate={Platform.OS === "ios" ? 0 : 0.98}
         renderToHardwareTextureAndroid

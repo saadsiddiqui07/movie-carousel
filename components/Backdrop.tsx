@@ -32,24 +32,30 @@ const Item = ({ item, index, scrollX }: any) => {
     };
   });
   return (
-    <MaskedView
-      style={{ position: "absolute" }}
-      maskElement={
-        <AnimatedComponent
-          width={width}
-          height={height}
-          viewBox={`0 0 ${width} ${height}`}
-          style={[animatedStyle]}
-        >
-          <Rect width={width} height={height} fill={"red"} x="0" y="0" />
-        </AnimatedComponent>
-      }
-    >
+    // <MaskedView
+    //   style={{ position: "absolute", flex: 1 }}
+    //   maskElement={
+    //     <AnimatedComponent
+    //       width={width}
+    //       height={height}
+    //       viewBox={`0 0 ${width} ${height}`}
+    //       style={[animatedStyle]}
+    //     >
+    //       <Rect width={width} height={height} fill={"red"} x="0" y="0" />
+    //     </AnimatedComponent>
+    //   }
+    // >
+    //   <Image
+    //     source={{ uri: item.backdrop }}
+    //     style={{ width, height: BACKDROP_HEIGHT, resizeMode: "cover" }}
+    //   />
+    // </MaskedView>
+    <Animated.View style={[{ position: "absolute" }, animatedStyle]}>
       <Image
         source={{ uri: item.backdrop }}
         style={{ width, height: BACKDROP_HEIGHT, resizeMode: "cover" }}
       />
-    </MaskedView>
+    </Animated.View>
   );
 };
 
