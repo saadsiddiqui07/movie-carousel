@@ -1,4 +1,4 @@
-const API_KEY = "9f930a1aa02c6f4f9e9eebb3d5de7a81";
+const API_KEY = "YOUR-API-KEY";
 const genres = {
   12: "Adventure",
   14: "Fantasy",
