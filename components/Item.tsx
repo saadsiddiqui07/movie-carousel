@@ -19,7 +19,7 @@ const AnimatedItemComponent = Animated.createAnimatedComponent(View);
 
 const Item = ({ index, item, scrollX }: Props) => {
   const inputRange = [(index - 1) * width, index * width, (index + 1) * width];
-  const animatedImageStyle = useAnimatedStyle(() => {
+  const animatedViewStyle = useAnimatedStyle(() => {
     return {
       transform: [
         { translateY: interpolate(scrollX.value, inputRange, [40, -30, 40]) },
@@ -27,10 +27,24 @@ const Item = ({ index, item, scrollX }: Props) => {
     };
   });
 
+  const animatedDescription = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: interpolate(
+            scrollX.value,
+            [(index - 0.2) * width, index * width, (index + 0.2) * width],
+            [50, 0, -50]
+          ),
+        },
+      ],
+    };
+  });
+
   return (
     <Animated.View
       key={item.key}
-      style={[{ width: width, marginTop: SPACING * 2 }, animatedImageStyle]}
+      style={[{ width: width, marginTop: SPACING * 2 }, animatedViewStyle]}
     >
       <View
         style={{
@@ -48,17 +62,20 @@ const Item = ({ index, item, scrollX }: Props) => {
         <Rating rating={item.rating} />
         <Genres genres={item.genres} />
       </View>
-      <Text
-        style={{
-          fontSize: 12,
-          marginHorizontal: SPACING * 2,
-          textAlign: "center",
-          marginTop: SPACING * 2,
-        }}
+      <Animated.Text
+        style={[
+          {
+            fontSize: 12,
+            marginHorizontal: SPACING * 2,
+            textAlign: "center",
+            marginTop: SPACING * 2,
+          },
+          animatedDescription,
+        ]}
         numberOfLines={3}
       >
         {item.description}
-      </Text>
+      </Animated.Text>
     </Animated.View>
   );
 };
