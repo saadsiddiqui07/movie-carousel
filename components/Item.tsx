@@ -4,10 +4,12 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { ITEM_SIZE, SPACING, width } from "../constants";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { ITEM_SIZE, SPACING, height, width } from "../constants";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import Rating from "./Rating";
 import Genres from "./Genres";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootParams } from "../navigation/main";
 
 interface Props {
   item: any;
@@ -15,9 +17,10 @@ interface Props {
   index: number;
 }
 
-const AnimatedItemComponent = Animated.createAnimatedComponent(View);
+const AnimatedItemComponent = Animated.createAnimatedComponent(Pressable);
 
 const Item = ({ index, item, scrollX }: Props) => {
+  const navigation = useNavigation<NavigationProp<RootParams>>();
   const inputRange = [(index - 1) * width, index * width, (index + 1) * width];
   const animatedViewStyle = useAnimatedStyle(() => {
     return {
@@ -42,9 +45,10 @@ const Item = ({ index, item, scrollX }: Props) => {
   });
 
   return (
-    <Animated.View
+    <AnimatedItemComponent
       key={item.key}
-      style={[{ width: width, marginTop: SPACING * 2 }, animatedViewStyle]}
+      style={[{ width: width, marginTop: SPACING * 3 }, animatedViewStyle]}
+      onPress={() => navigation.navigate("Details", { item })}
     >
       <View
         style={{
@@ -55,7 +59,10 @@ const Item = ({ index, item, scrollX }: Props) => {
           borderRadius: 34,
         }}
       >
-        <Image source={{ uri: item.poster }} style={[styles.posterImage]} />
+        <Animated.Image
+          source={{ uri: item.poster }}
+          style={[styles.posterImage]}
+        />
         <Text style={{ fontSize: 24 }} numberOfLines={1}>
           {item.title}
         </Text>
@@ -76,7 +83,7 @@ const Item = ({ index, item, scrollX }: Props) => {
       >
         {item.description}
       </Animated.Text>
-    </Animated.View>
+    </AnimatedItemComponent>
   );
 };
 

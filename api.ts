@@ -1,4 +1,4 @@
-const API_KEY = "YOUR-API-KEY";
+const API_KEY = "9f930a1aa02c6f4f9e9eebb3d5de7a81";
 const genres = {
   12: "Adventure",
   14: "Fantasy",
@@ -21,7 +21,8 @@ const genres = {
   10770: "TV Movie",
 };
 
-const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc`;
+const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_cast=,&sort_by=popularity.desc`;
+
 const getImagePath = (path: string) =>
   `https://image.tmdb.org/t/p/w440_and_h660_face${path}`;
 const getBackdropPath = (path: string) =>
@@ -29,6 +30,7 @@ const getBackdropPath = (path: string) =>
 
 export const getMovies = async () => {
   const { results } = await fetch(API_URL).then((x) => x.json());
+  console.log(results[0]);
   const movies = results?.map(
     ({
       id,
