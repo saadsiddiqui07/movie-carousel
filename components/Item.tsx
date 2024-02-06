@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Animated, {
   SharedValue,
   interpolate,
@@ -101,4 +101,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
-export default Item;
+export default memo(Item);

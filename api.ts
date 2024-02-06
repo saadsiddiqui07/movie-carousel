@@ -1,5 +1,6 @@
-const API_KEY = "9f930a1aa02c6f4f9e9eebb3d5de7a81";
-const genres = {
+// get your API_KEY from https://www.themoviedb.org/
+const API_KEY = "YOUR_API_KEY";
+const genres: any = {
   12: "Adventure",
   14: "Fantasy",
   16: "Animation",
@@ -30,7 +31,6 @@ const getBackdropPath = (path: string) =>
 
 export const getMovies = async () => {
   const { results } = await fetch(API_URL).then((x) => x.json());
-  console.log(results[0]);
   const movies = results?.map(
     ({
       id,
