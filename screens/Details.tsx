@@ -8,13 +8,16 @@ import {
 } from "react-native";
 import React from "react";
 import { height, width } from "../constants";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootParams } from "../navigation/main";
 import * as Animatable from "react-native-animatable";
 import StarRating from "../components/Rating";
 import Genres from "../components/Genres";
 import Animated from "react-native-reanimated";
+
+const AnimatedTouchableOpacity =
+  Animatable.createAnimatableComponent(TouchableOpacity);
 
 const animation = {
   0: { opacity: 0, height: 0 },
@@ -49,11 +52,17 @@ const Details = ({ route }: any) => {
       >
         <Ionicons name="close-circle-sharp" size={35} color={"white"} />
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{ position: "absolute", top: 60, right: 20, zIndex: 1 }}
+      >
+        <Ionicons name="share-outline" size={35} color={"white"} />
+      </TouchableOpacity>
       <Animated.Image
         source={{ uri: item.poster }}
         style={{
           height: height * 0.6,
-          width: width * 0.7,
+          width: width,
           resizeMode: "cover",
         }}
       />
@@ -87,8 +96,20 @@ const Details = ({ route }: any) => {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
+              marginVertical: 10,
             }}
           >
+            {/* <Text
+              style={{
+                textTransform: "uppercase",
+                fontWeight: "900",
+                fontSize: 15,
+                color: "gray",
+                textDecorationLine: "underline",
+              }}
+            >
+              Movie Details
+            </Text> */}
             <Animatable.Text
               animation={detailsAnimation}
               delay={300}
@@ -129,6 +150,38 @@ const Details = ({ route }: any) => {
           </Animatable.View>
         </ScrollView>
       </Animatable.View>
+      <AnimatedTouchableOpacity
+        animation={detailsAnimation}
+        delay={800}
+        activeOpacity={0.7}
+        style={{
+          alignSelf: "center",
+          backgroundColor: "#0f172a",
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+          width: "80%",
+          zIndex: 2,
+          marginBottom: 30,
+          marginTop: "auto",
+          borderRadius: 10,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 10,
+        }}
+      >
+        <Text
+          style={{
+            color: "white",
+            fontWeight: "800",
+            fontSize: 15,
+            textAlign: "center",
+          }}
+        >
+          Book a seat
+        </Text>
+        <MaterialCommunityIcons name="seat" size={22} color={"white"} />
+      </AnimatedTouchableOpacity>
     </View>
   );
 };

@@ -22,7 +22,7 @@ const genres: any = {
   10770: "TV Movie",
 };
 
-const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_cast=,&sort_by=popularity.desc`;
+const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}`;
 
 const getImagePath = (path: string) =>
   `https://image.tmdb.org/t/p/w440_and_h660_face${path}`;

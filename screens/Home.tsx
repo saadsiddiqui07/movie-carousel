@@ -37,6 +37,7 @@ export default function HomeScreen() {
       <StatusBar style="auto" />
       <Backdrop movies={movies} scrollX={scrollX} />
       <Animated.FlatList
+        removeClippedSubviews
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToInterval={width}
